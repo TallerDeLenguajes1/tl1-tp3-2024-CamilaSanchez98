@@ -61,8 +61,8 @@ void solicitarNombres(char *Buff[]){
     printf("---------------Cargar------------------\n");
     for (int i = 0; i < CANTIDAD; i++)
     {
-        printf("Ingrese el nombre:\n");
         fflush(stdin);
+        printf("Ingrese el nombre:");
         gets(Buff[i]);
     }
     
@@ -72,7 +72,6 @@ void mostrarNombres(char *Buff[]){
     for (int i = 0; i < CANTIDAD; i++)
     {
         printf("Nombre[%d]:\n", i);
-        fflush(stdin);
         puts(Buff[i]);
     }
     

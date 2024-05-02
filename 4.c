@@ -37,6 +37,7 @@ Producto* buscarProducto(Preventista **pDoblePreventistas, int id, int cantidadP
 float costoTotal(Producto **producto);
 int costoFinalProductos(Preventista ** pDoblePreventistas,int cantidadPrev);
 void mostrarTodo(Preventista **pDoblePreventistas, int cantidadPrev);
+void liberar(Preventista **pDoblePreventistas, int cantidadPrev);
 
 int main()
 {
@@ -64,6 +65,7 @@ int main()
         printf("ERROR. Producto no encontrado.\n");
     }
 
+    liberar(&pPreventistas,cantidadPrev);
     return 0;
 }
 
@@ -171,6 +173,8 @@ void cargarClientes(Preventista **pDoblePreventistas, int cantidadPrev){
             }
         }  
     }
+    free(Buff);
+    free(nombre);
     printf("....clientes y productos cargados.\n");
 }
 Producto* buscarProducto(Preventista **pDoblePrev, int id, int cantidadPrev){
@@ -245,4 +249,23 @@ void mostrarTodo(Preventista **pDoblePreventistas, int cantidadPrev){
             printf("-TOTAL a pagar por todos los productos comprados: $ %.2f\n", suma);
         }  
     }
+}
+void liberar(Preventista **pDoblePreventistas, int cantidadPrev){
+    Preventista *aux = *pDoblePreventistas;
+    int cantidadProductos;
+    int cantidadClientes;
+    for (int i = 0; i < cantidadPrev; i++)
+    {
+        printf("----->>>Preventista [%d]: \n", i);
+        Preventista *prevActual = &aux[i];
+        cantidadClientes= prevActual->cantidadClientesTotal;
+        for (int j = 0; j < cantidadClientes; j++)
+        {
+            Cliente *clienteActual = &(prevActual->clientes[j]);
+            free(clienteActual->productos);
+        }
+        free(prevActual->clientes);
+    }
+    free(*pDoblePreventistas);
+    printf("...memoria liberada.\n");
 }
